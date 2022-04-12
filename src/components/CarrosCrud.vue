@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>My CRUD</v-toolbar-title> {{editedIndex.id}}
+        <v-toolbar-title>My CRUD</v-toolbar-title> 
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="700px">
@@ -116,16 +116,17 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
+        console.log(this.editedItem.id);
         //alteracao
         axios
           .put(
-            " http://localhost:3000/carrosAntigos/" + this.editedIndex.id,
+            " http://localhost:3000/carrosAntigos/" + this.editedItem.id,
             this.editedItem
           )
           .then((response) => {
             console.log(response);
             Object.assign(this.carros[this.editedIndex], this.editedItem);
-            this.close;
+            this.close();
           })
           .catch((error) => console.log(error));
       } else {
