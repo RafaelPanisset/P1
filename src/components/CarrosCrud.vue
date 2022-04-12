@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>My CRUD</v-toolbar-title>
+        <v-toolbar-title>My CRUD</v-toolbar-title> {{editedIndex.id}}
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="700px">
@@ -32,14 +32,20 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="8">
                     <v-text-field
-                      v-model="editedItem.name"
+                      v-model="editedItem.ano"
                       label="Ano"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.location"
+                      v-model="editedItem.marca"
                       label="Marca"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.versao"
+                      label="Versão"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -113,7 +119,7 @@ export default {
         //alteracao
         axios
           .put(
-            " http://localhost:3000/carrosAntigos" + this.editedIndex.id,
+            " http://localhost:3000/carrosAntigos/" + this.editedIndex.id,
             this.editedItem
           )
           .then((response) => {
@@ -125,7 +131,7 @@ export default {
       } else {
         //Inclusao
         axios
-          .post("http://localhost:3000/carrosAntigos", this.editedItem)
+          .post("http://localhost:3000/carrosAntigos/", this.editedItem)
           .then((response) => {
             console.log(response);
             this.carros.push(this.editedItem);
@@ -143,7 +149,7 @@ export default {
       const index = this.carros.indexOf(item);
       confirm("Deseja apagar este item?") &&
         axios
-          .delete("http://localhost:3000/carrosAntigos" + item.id)
+          .delete("http://localhost:3000/carrosAntigos/" + item.id)
           .then((response) => {
             console.log(response.data);
             this.carros.splice(index, 1);
